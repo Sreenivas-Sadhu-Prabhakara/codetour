@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #F4EEE1; }
+  body { display: grid; place-items: center; }
+  /* 12% safe padding on each side -> mark fills the middle 76vmin */
+  .mark { width: 76vmin; height: 76vmin; display: block; }
+</style>
+</head>
+<body>
+  <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+    <path d="M6 22c3-1 4-9 8-9s5 8 8 6" fill="none" stroke="#2E6E6A" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="1 4.2"/>
+    <circle cx="6" cy="22" r="3.4" fill="#2E6E6A"/>
+    <circle cx="14" cy="13" r="3.4" fill="#F4EEE1" stroke="#C98A2B" stroke-width="2.6"/>
+    <circle cx="22" cy="19" r="3.4" fill="#C98A2B"/>
+  </svg>
+</body>
+</html>

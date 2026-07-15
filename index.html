@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+  <title>codetour — turn code into a guided walkthrough</title>
+  <meta name="description" content="Paste your code and get a guided, annotated walkthrough of the codebase. codetour finds the landmarks — functions, classes, imports — and scaffolds a tour you narrate and export. Private, offline, no AI.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/codetour/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Sreenivas Sadhu Prabhakara">
+  <meta name="keywords" content="code walkthrough, explain codebase, code tour, onboarding docs, code annotation, guided code reading, static code parser, code documentation tool, JavaScript Python Go parser, code review notes">
+  <meta name="theme-color" content="#123033" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F4EEE1" media="(prefers-color-scheme: light)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="codetour">
+  <meta property="og:title" content="codetour — turn code into a guided walkthrough">
+  <meta property="og:description" content="Paste your code and get a guided, annotated walkthrough. codetour finds the landmarks and scaffolds a tour you narrate and export as Markdown or HTML. Private, offline, no AI.">
+  <meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/codetour/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/codetour/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="codetour — turn code into a guided walkthrough">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="codetour — turn code into a guided walkthrough">
+  <meta name="twitter:description" content="Paste your code and get a guided, annotated walkthrough you narrate and export. Private, offline, no AI.">
+  <meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/codetour/og-image.png">
+  <meta name="twitter:image:alt" content="codetour — turn code into a guided walkthrough">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Structured data (data block; not affected by script-src) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "codetour",
+    "description": "A client-side tool that parses pasted source code with heuristics to find its landmarks — functions, classes, methods, imports and top-level sections — and scaffolds an ordered, annotated walkthrough you narrate and export as Markdown or a standalone HTML document. Private, offline, no AI.",
+    "url": "https://sreenivas-sadhu-prabhakara.github.io/codetour/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any (modern web browser)",
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Person", "name": "Sreenivas Sadhu Prabhakara" },
+    "softwareVersion": "0.1.0",
+    "featureList": [
+      "Heuristic structure parsing for JavaScript, TypeScript, Python and Go",
+      "Multi-file input split on // file: markers",
+      "Auto-proposed tour stops with anchors, line ranges and code excerpts",
+      "Reorder stops and write a note for each",
+      "Export the walkthrough as Markdown or a standalone HTML document",
+      "Runs 100% offline in your browser"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does codetour use AI to understand my code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. codetour uses plain heuristic parsing — regular expressions and tokenisation — to find structural landmarks like functions, classes, methods and imports. It locates the landmarks and scaffolds the tour; you write the explanations. It does not run, execute, or semantically understand your code."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which languages does codetour support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It detects structure for JavaScript, TypeScript, Python and Go. Any other language is treated gracefully as plain text: it still splits into sections on headings and blank-line breaks so you can build a tour, just without language-specific landmarks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my code uploaded anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. codetour runs entirely in your browser and a strict Content-Security-Policy blocks every network request. Your code and notes are parsed locally and saved only to your own device's local storage. Nothing is ever transmitted."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#workbench">Skip to the tour</a>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="top">
+    <div class="hero__route" aria-hidden="true">
+      <svg class="route" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMid slice" role="presentation">
+        <path class="route__line" d=""></path>
+        <g class="route__stops"></g>
+      </svg>
+    </div>
+
+    <div class="hero__inner">
+      <p class="eyebrow">Guided code walkthroughs &middot; heuristic &middot; offline</p>
+      <h1 class="hero__title">Turn code into a <span class="hero__accent">guided walkthrough.</span></h1>
+      <p class="hero__lede">
+        Paste one or more files. codetour finds the landmarks&mdash;<em>functions, classes, imports,
+        sections</em>&mdash;and lays out an ordered tour. You reorder the stops, write a note for each,
+        and export the whole thing as Markdown or a standalone page. No accounts, no network, no AI.
+      </p>
+    </div>
+  </header>
+
+  <main id="workbench">
+    <!-- ============ INPUT PANEL ============ -->
+    <section class="input" aria-labelledby="inputHeading">
+      <div class="input__inner">
+        <div class="input__head">
+          <h2 class="input__heading" id="inputHeading">Paste your code</h2>
+          <div class="input__lang">
+            <label for="langSelect">Language</label>
+            <select id="langSelect" name="lang">
+              <option value="auto" selected>Auto-detect</option>
+              <option value="js">JavaScript</option>
+              <option value="ts">TypeScript</option>
+              <option value="py">Python</option>
+              <option value="go">Go</option>
+              <option value="plain">Plain text</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="input__hint">
+          Split multiple files with a <code>// file: path/name.ext</code> marker on its own line
+          (or <code># file:</code> for Python). One file is fine too.
+        </p>
+
+        <label class="sr-only" for="codeInput">Source code to build a tour from</label>
+        <textarea id="codeInput" class="code-input" spellcheck="false" autocapitalize="off"
+          autocorrect="off" wrap="off" placeholder="// file: src/app.js
+import { render } from './render.js';
+
+export function main() {
+  render(document.body);
+}
+"></textarea>
+
+        <div class="input__actions">
+          <button type="button" class="btn btn--primary" id="buildBtn">Build the tour</button>
+          <button type="button" class="btn btn--ghost" id="sampleBtn">Load a sample</button>
+          <button type="button" class="btn btn--ghost" id="clearBtn">Clear</button>
+          <span class="input__note" id="inputNote">Everything stays on this device.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TOUR TOOLBAR ============ -->
+    <section class="toolbar" id="toolbar" hidden aria-label="Tour controls">
+      <div class="toolbar__inner">
+        <div class="toolbar__meta">
+          <span class="toolbar__count" id="stopCount">0 stops</span>
+          <span class="toolbar__dot" aria-hidden="true">&middot;</span>
+          <span class="toolbar__langs" id="langSummary"></span>
+        </div>
+        <div class="toolbar__field">
+          <label class="sr-only" for="tourTitle">Walkthrough title</label>
+          <input type="text" id="tourTitle" class="toolbar__title" placeholder="Name this walkthrough…" maxlength="120">
+        </div>
+        <div class="toolbar__actions">
+          <button type="button" class="btn btn--ghost" id="exportMdBtn">Export Markdown</button>
+          <button type="button" class="btn btn--ghost" id="exportHtmlBtn">Export HTML</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ THE TOUR ============ -->
+    <section class="tour" id="tour" aria-label="Walkthrough stops"></section>
+
+    <!-- ============ EMPTY / HELP ============ -->
+    <section class="empty" id="empty" aria-live="polite">
+      <div class="empty__card">
+        <svg class="empty__mark" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M8 46c8-2 12-14 20-14s12 12 20 10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 7"/>
+          <circle cx="10" cy="46" r="4.5" fill="currentColor"/>
+          <circle cx="30" cy="32" r="4.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="52" cy="42" r="4.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        </svg>
+        <h2 class="empty__title">No tour yet</h2>
+        <p class="empty__body">
+          Paste some code above and press <strong>Build the tour</strong>. codetour will read the
+          structure and propose an ordered set of stops&mdash;entry points first&mdash;that you can
+          reorder, annotate, and export. Or press <strong>Load a sample</strong> to see it work.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="foot">
+    <div class="foot__inner">
+      <p class="foot__disclaimer">
+        <strong>Heuristic, not semantic.</strong> codetour finds landmarks with pattern-matching&mdash;it
+        does <em>not</em> run or truly understand your code, and it does not use AI. It can miss or
+        mislabel declarations, especially in unusual formatting or unsupported languages. The
+        explanations are yours to write; treat the auto-detected structure as a starting point, not truth.
+      </p>
+      <p class="foot__meta">
+        <span>Works 100% offline</span><span class="foot__dot">&middot;</span>
+        <span>No network, no accounts, no AI</span><span class="foot__dot">&middot;</span>
+        <span>MIT&nbsp;License</span><span class="foot__dot">&middot;</span>
+        <span>&copy; 2026 Sreenivas&nbsp;Sadhu&nbsp;Prabhakara</span>
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
