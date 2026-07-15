@@ -30,12 +30,12 @@
 
   --code-bg:   #FBF7EE;
   --code-ink:  #2A3336;
-  --code-num:  #9A8F76;
+  --code-num:  #746A50;   /* line numbers / placeholder (5.0:1 on code-bg) */
 
   /* syntax (hand-rolled tokenizer) — light */
   --syn-key:   #215A57;
   --syn-str:   #8A5A12;
-  --syn-com:   #7C8A7B;
+  --syn-com:   #5E6E5C;   /* comment (5.1:1 on code-bg) */
   --syn-num:   #9C4A2F;
   --syn-fn:    #2E6E6A;
 
@@ -75,11 +75,11 @@
 
     --code-bg:   #0E282B;
     --code-ink:  #D2D8CE;
-    --code-num:  #5D726F;
+    --code-num:  #869B97;   /* line numbers / placeholder (5.3:1 on code-bg) */
 
     --syn-key:   #7FCCC5;
     --syn-str:   #E0A94A;
-    --syn-com:   #7C8A88;
+    --syn-com:   #8FA3A0;   /* comment (5.8:1 on code-bg) */
     --syn-num:   #E89B7C;
     --syn-fn:    #8FD3CB;
 

@@ -513,7 +513,7 @@
     var title = state.title.trim() || "Code walkthrough";
     var css =
       ":root{--bg:#F4EEE1;--card:#FBF7EE;--ink:#1E2A2E;--muted:#4A5A5C;--line:#D8CDB6;" +
-      "--teal:#215A57;--ochre:#8A5A12;--codebg:#FBF7EE;--num:#9A8F76;" +
+      "--teal:#215A57;--ochre:#8A5A12;--codebg:#FBF7EE;--num:#746A50;" +
       "--sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;" +
       "--mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace}" +
       "*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);" +
@@ -532,7 +532,7 @@
       "code{font-family:var(--mono);font-size:.84rem;line-height:1.6;white-space:pre}.n{color:var(--num);display:inline-block;width:3em;text-align:right;padding-right:1em;user-select:none}" +
       ".note{padding:14px 16px;color:var(--ink);white-space:pre-wrap}.note:empty{display:none}" +
       "footer{max-width:820px;margin:32px auto 0;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line);padding-top:16px}" +
-      "@media(prefers-color-scheme:dark){:root{--bg:#123033;--card:#183C3E;--ink:#E9E3D4;--muted:#9DB0AC;--line:#274B4D;--teal:#7FCCC5;--ochre:#E0A94A;--codebg:#0E282B;--num:#5D726F}" +
+      "@media(prefers-color-scheme:dark){:root{--bg:#123033;--card:#183C3E;--ink:#E9E3D4;--muted:#9DB0AC;--line:#274B4D;--teal:#7FCCC5;--ochre:#E0A94A;--codebg:#0E282B;--num:#869B97}" +
       ".kind{background:#14322E;color:#7FCCC5}.entry .kind{background:#2A2418;color:#E0A94A}.num{color:#E0A94A;border-color:#E0A94A}.entry .num{background:#E0A94A;color:#123033}}";
 
     var body = state.stops.map(function (s, i) {
