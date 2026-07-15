@@ -164,7 +164,7 @@ textarea:focus-visible {
 .hero__route {
   position: absolute; inset: 0;
   z-index: 0;
-  opacity: 0.85;
+  opacity: 0.55;
   mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 96%);
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 96%);
 }

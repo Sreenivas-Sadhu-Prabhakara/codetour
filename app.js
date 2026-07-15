@@ -717,23 +717,10 @@
       d += " T " + pts[j][0].toFixed(1) + " " + pts[j][1].toFixed(1);
     }
     pathEl.setAttribute("d", d);
-
-    var frag = document.createDocumentFragment();
-    for (var k = 1; k < pts.length - 1; k++) {
-      var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      var circ = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circ.setAttribute("cx", pts[k][0].toFixed(1));
-      circ.setAttribute("cy", pts[k][1].toFixed(1));
-      circ.setAttribute("r", "14");
-      if (k % 2 === 0) circ.setAttribute("class", "is-fill");
-      var txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      txt.setAttribute("x", pts[k][0].toFixed(1));
-      txt.setAttribute("y", (pts[k][1] + 0.5).toFixed(1));
-      txt.textContent = String(k);
-      g.appendChild(circ); g.appendChild(txt);
-      frag.appendChild(g);
-    }
-    stopsG.appendChild(frag);
+    // The hero shows only the winding route line as a background signature.
+    // The numbered waypoints live in the actual tour below, so we keep them out
+    // of the hero to avoid overlapping the headline and lede text.
+    stopsG.textContent = "";
   }
 
   if (document.readyState === "loading") {
